@@ -12,15 +12,19 @@ app.use(express.urlencoded({ extended: false }));
 
 app.get("/", (req, res) => {
   res.send({
-    title: "DUC Chat System",
+    title: "System",
     version: "1.0.0",
   });
 });
 
 app.get("/forms", (req, res) => {
-  connection.query(`SELECT * FROM form`, (err, result) => {
-    res.send(result);
-  });
+  if (req.query.auth != "AzdAddsaUUsaMjjjdajAu2ww87718") {
+    res.sendStatus(401);
+  } else {
+    connection.query(`SELECT * FROM form`, (err, result) => {
+      res.send(result);
+    });
+  }
 });
 
 app.post("/forms", (req, res) => {
